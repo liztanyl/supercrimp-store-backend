@@ -1,5 +1,5 @@
-import cookieParser from "cookie-parser";
 import express from "express";
+import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
 
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
