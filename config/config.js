@@ -1,6 +1,6 @@
 module.exports = {
   development: {
-    username: "<YOUR_USER_NAME>",
+    username: "gcskhor",
     password: null,
     database: "supercrimp_store",
     host: "127.0.0.1",
