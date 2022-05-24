@@ -158,6 +158,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.BOOLEAN,
       },
+      colour_code: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -221,6 +225,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       product_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: "products",
@@ -228,6 +233,7 @@ module.exports = {
         },
       },
       colour_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: "colours",
@@ -247,7 +253,7 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("products_colours");
-    await queryInterface.dropTable("order_products");
+    await queryInterface.dropTable("orders_products");
     await queryInterface.dropTable("colours");
     await queryInterface.dropTable("orders");
     await queryInterface.dropTable("users");
