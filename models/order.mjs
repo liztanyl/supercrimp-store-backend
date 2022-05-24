@@ -8,17 +8,17 @@ export default function initOrderModel(sequelize, DataTypes) {
 				primaryKey: true,
 				type: DataTypes.INTEGER,
 			},
-			user_id: {
+			userId: {
 				type: DataTypes.INTEGER,
 				references: {
 					model: 'users',
 					key: 'id',
 				},
 			},
-			delivery_fee: {
+			deliveryFee: {
 				type: DataTypes.DECIMAL(10, 2),
 			},
-			total_cost: {
+			totalCost: {
 				allowNull: false,
 				type: DataTypes.DECIMAL(10, 2),
 			},
@@ -26,11 +26,11 @@ export default function initOrderModel(sequelize, DataTypes) {
 				allowNull: false,
 				type: DataTypes.BOOLEAN,
 			},
-			created_at: {
+			createdAt: {
 				allowNull: false,
 				type: DataTypes.DATE,
 			},
-			updated_at: {
+			updatedAt: {
 				allowNull: false,
 				type: DataTypes.DATE,
 			},
