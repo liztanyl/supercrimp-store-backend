@@ -6,6 +6,7 @@ node_modules/
 
 # config file
 config/
+config/config.js
 
 # environment variable file
 .env
