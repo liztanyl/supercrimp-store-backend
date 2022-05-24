@@ -1,6 +1,9 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 
