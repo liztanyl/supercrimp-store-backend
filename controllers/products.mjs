@@ -50,12 +50,21 @@ export default function initProductsController(db) {
 		}
 	};
 
-	const product = async (request, response) => {
-		try {
-		} catch (error) {
-			console.log(error);
-		}
-	};
+  const product = async (request, response) => {
+    try {
+      const { product_id } = request.params;
+      const product = await db.Product.findOne({
+        where: {
+          id: product_id,
+        },
+        include: db.Colour,
+      });
+      const dataToClient = formatProduct([product])[0];
+      response.send(dataToClient);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
 	const add = async (request, response) => {
 		try {
