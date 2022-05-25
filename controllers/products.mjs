@@ -12,8 +12,8 @@ const formatProduct = (products) => {
       id: product.id,
       name: product.name,
       description: product.description,
-      usualPrice: product.usual_price,
-      currentPrice: product.current_price,
+      usualPrice: product.usualPrice,
+      currentPrice: product.currentPrice,
       colours,
     };
   });
@@ -27,7 +27,7 @@ export default function initProductsController(db) {
       });
 
       const dataToClient = formatProduct(products);
-
+      console.log(dataToClient);
       response.send(dataToClient);
     } catch (error) {
       console.log(error.message);
