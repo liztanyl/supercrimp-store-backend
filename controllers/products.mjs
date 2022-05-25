@@ -1,68 +1,79 @@
+const formatProduct = (products) => {
+  return products.map((product) => {
+    const colours = product.colours.map((colour) => {
+      return {
+        id: colour.id,
+        name: colour.name,
+        colourCode: colour.colour_code,
+      };
+    });
+
+    return {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      usualPrice: product.usual_price,
+      currentPrice: product.current_price,
+      colours,
+    };
+  });
+};
+
 export default function initProductsController(db) {
-	const allProducts = async (request, response) => {
-		try {
-		} catch (error) {
-			console.log(error);
-		}
-	};
+  const allProducts = async (request, response) => {
+    try {
+      const products = await db.Product.findAll({
+        include: db.Colour,
+      });
 
-	const availableProducts = async (request, response) => {
-		try {
-			const products = await db.Product.findAll({
-				where: { available: true },
-				include: db.Colour,
-			});
+      const dataToClient = formatProduct(products);
 
-			const dataToClient = products.map((product) => {
-				const colours = product.colours.map((colour) => {
-					return {
-						id: colour.id,
-						name: colour.name,
-						colourCode: colour.colour_code,
-					};
-				});
+      response.send(dataToClient);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-				return {
-					id: product.id,
-					name: product.name,
-					description: product.description,
-					usualPrice: product.usual_price,
-					currentPrice: product.current_price,
-					colours,
-				};
-			});
+  const availableProducts = async (request, response) => {
+    try {
+      const products = await db.Product.findAll({
+        where: { available: true },
+        include: db.Colour,
+      });
 
-			response.send(dataToClient);
-		} catch (error) {
-			console.log(error.message);
-		}
-	};
+      const dataToClient = formatProduct(products);
 
-	const product = async (request, response) => {
-		try {
-		} catch (error) {
-			console.log(error);
-		}
-	};
+      response.send(dataToClient);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-	const add = async (request, response) => {
-		try {
-		} catch (error) {
-			console.log(error);
-		}
-	};
+  const product = async (request, response) => {
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-	const edit = async (request, response) => {
-		try {
-		} catch (error) {
-			console.log(error);
-		}
-	};
-	return {
-		allProducts,
-		availableProducts,
-		product,
-		add,
-		edit,
-	};
+  const add = async (request, response) => {
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const edit = async (request, response) => {
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return {
+    allProducts,
+    availableProducts,
+    product,
+    add,
+    edit,
+  };
 }
