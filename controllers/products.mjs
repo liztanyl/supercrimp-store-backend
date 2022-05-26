@@ -70,6 +70,16 @@ export default function initProductsController(db) {
 
   const add = async (request, response) => {
     try {
+      const { name, description, usualPrice, currentPrice, available } =
+        request.body;
+      const newProduct = await db.Product.create({
+        name,
+        description,
+        currentPrice,
+        usualPrice,
+        available,
+      });
+      console.log(newProduct);
     } catch (error) {
       console.log(error);
     }
