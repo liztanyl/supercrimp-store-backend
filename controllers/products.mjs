@@ -77,13 +77,15 @@ export default function initProductsController(db) {
 
   const edit = async (request, response) => {
     try {
-      const { id, name, description, usualPrice, currentPrice } = request.body;
+      const { id, name, description, usualPrice, currentPrice, available } =
+        request.body;
       const updatedProduct = await db.Product.update(
         {
           name,
           description,
           currentPrice,
           usualPrice,
+          available,
         },
         { where: { id } }
       );
