@@ -1,21 +1,34 @@
+const formatColour = (colour) => {
+	return {
+		id: colour.id,
+		name: colour.name,
+		code: colour.colourCode,
+	};
+};
+
 export default function initColoursController(db) {
 	const allColours = async (request, response) => {
 		try {
+			const colours = await db.Colour.findAll();
+
+			const dataToClient = colours.map((colour) => formatColour(colour));
+
+			console.log(dataToClient);
+			response.send(dataToClient);
 		} catch (error) {
-			console.log(error);
+			console.log(error.message);
 		}
 	};
 
 	const availableColours = async (request, response) => {
 		try {
-			const colours = await db.Colour.findAll({ where: { available: true } });
-			const dataToClient = colours.map((colour) => {
-				return {
-					id: colour.id,
-					name: colour.name,
-					code: colour.colourCode,
-				};
+			const colours = await db.Colour.findAll({
+				where: { available: true },
 			});
+
+			const dataToClient = colours.map((colour) => formatColour(colour));
+
+			console.log(dataToClient);
 			response.send(dataToClient);
 		} catch (error) {
 			console.log(error.message);
