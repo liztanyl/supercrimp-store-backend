@@ -59,10 +59,85 @@ module.exports = {
     );
 
     // PRODUCTS
+
+    const descriptionTriHard = `<div>
+  <div>
+    The Tri-Hard Crimp Ring pair is an affordable and lightweight portable
+    solution for on-the-go hangboard training. Its 3 edges will super-charge
+    your crimp game in no time!
+  </div>
+
+  <div>
+    <h4>Its features include:</h4>
+    <div>20mm, 15mm and 10mm edges for progressive training</div>
+  </div>
+  <div>
+    <h4>Outer Dimensions:</h4>
+    <div>10cm x 11.5cm x 2.3cm</div>
+  </div>
+  <div>
+    <h4>Mounting:</h4>
+    <div>
+      Each Tri-Hard Crimp Ring pair comes with a loop of 4mm paracord that can
+      be threaded through the centre hole. Simply adjust your paracord lengths
+      evenly, tie a reef knot and hang it on any indoor or outdoor pull-up bar!
+    </div>
+    <div>
+      Alternatively, loop the paracord around weights, resistance bands and
+      other training equipment for more interesting ways to improve your grip
+      strength!
+    </div>
+  </div>
+  <div>
+    <h4>Materials:</h4>
+    <div>
+      Every Tri-Hard Crimp Ring is 3D-printed out of strong PETG plastic. Unlike
+      typical manufacturing processes, we print every product on demand so
+      there’s no wastage from excessive production!
+    </div>
+  </div>
+</div>
+`;
+
+    const descriptionMiniHangboard = `<div>
+  <div>
+    The Mini Hangboard pair is an affordable and lightweight portable solution
+    for on-the-go hangboard training. Its 3 forms of use with a level of
+    difficulty each will super-charge your climb game in no time!
+  </div>
+
+  <div>
+    <h4>Its features include:</h4>
+    <div>- a 20mm-deep crimp</div>
+    <div>- a 30mm crimp</div>
+    <div>- a jug</div>
+  </div>
+  <div>
+    <h4>Outer Dimensions:</h4>
+    <div>10cm x 11.5cm x 2.3cm</div>
+  </div>
+  <div>
+    <h4>Mounting:</h4>
+    <div>
+      Each Mini-Hangboard pair comes with a loop of 4mm paracord that can be
+      threaded through the centre hole. Simply adjust your paracord lengths
+      evenly, tie a reef knot and hang it on any indoor or outdoor pull-up bar!
+    </div>
+  </div>
+  <div>
+    <h4>Materials:</h4>
+    <div>
+      Every Mini-Hangboard is 3D-printed out of strong PETG plastic. Unlike
+      typical manufacturing processes, we print every product on demand so
+      there’s no wastage from excessive production!
+    </div>
+  </div>
+</div>
+`;
     const products = [
       {
         name: "Tri-hard",
-        description: "",
+        description: descriptionTriHard,
         usual_price: 60,
         current_price: 40,
         available: true,
@@ -71,7 +146,7 @@ module.exports = {
       },
       {
         name: "Mini-hangboard",
-        description: "",
+        description: descriptionMiniHangboard,
         usual_price: 35,
         current_price: 25,
         available: true,
@@ -235,6 +310,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete("orders_products", null, {});
     await queryInterface.bulkDelete("products_colours", null, {});
+    await queryInterface.bulkDelete("orders", null, {});
 
     await queryInterface.bulkDelete("admin_users", null, {});
     await queryInterface.bulkDelete("users", null, {});
