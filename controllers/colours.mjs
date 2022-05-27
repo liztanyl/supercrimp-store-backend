@@ -3,6 +3,7 @@ const formatColour = (colour) => {
     id: colour.id,
     name: colour.name,
     code: colour.colourCode,
+    available: colour.available,
   };
 };
 
