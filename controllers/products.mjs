@@ -1,5 +1,3 @@
-import initColoursController from "./colours.mjs";
-
 const formatProduct = (product) => {
   const colours = product.colours.map((colour) => {
     return {
