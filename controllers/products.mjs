@@ -1,5 +1,3 @@
-import initColoursController from "./colours.mjs";
-
 const formatProduct = (product) => {
   const colours = product.colours.map((colour) => {
     return {
@@ -168,11 +166,30 @@ export default function initProductsController(db) {
       console.log(error);
     }
   };
+
+  const deleteProduct = async (request, response) => {
+    try {
+      const { id } = request.body;
+
+      const productToDelete = await db.Product.findOne({
+        where: { id },
+      });
+
+      await productToDelete.setColours([]);
+      await productToDelete.destroy();
+
+      response.send({});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     allProducts,
     availableProducts,
     product,
     add,
     edit,
+    deleteProduct,
   };
 }
