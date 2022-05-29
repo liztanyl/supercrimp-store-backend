@@ -39,24 +39,14 @@ db.Product.belongsToMany(db.Order, { through: db.OrderProduct });
 db.Order.belongsToMany(db.Colour, { through: db.OrderProduct });
 db.Colour.belongsToMany(db.Order, { through: db.OrderProduct });
 
-<<<<<<< HEAD
 db.Product.hasMany(db.OrderProduct);
 db.OrderProduct.belongsTo(db.Product);
-=======
-db.Order.hasMany(db.OrderProduct);
-db.OrderProduct.belongsTo(db.Order);
->>>>>>> f21fc4df6d560e795d05b2e80defa8da816a8b14
 
 db.Colour.hasMany(db.OrderProduct);
 db.OrderProduct.belongsTo(db.Colour);
 
-<<<<<<< HEAD
 db.Order.hasMany(db.OrderProduct);
 db.OrderProduct.belongsTo(db.Order);
-=======
-db.Product.hasMany(db.OrderProduct);
-db.OrderProduct.belongsTo(db.Product);
->>>>>>> f21fc4df6d560e795d05b2e80defa8da816a8b14
 
 // no product_colour model
 db.Product.belongsToMany(db.Colour, { through: "products_colours" });
