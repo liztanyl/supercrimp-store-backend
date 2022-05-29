@@ -58,4 +58,8 @@ export default function bindRoutes(app) {
   app.post("/admin/colour/add", ColoursController.add);
   app.post("/admin/colour/:colour_id/edit", ColoursController.edit);
   app.post("/admin/colour/delete", ColoursController.deleteColour);
+
+  // ORDERS
+  app.get("/admin/orders/pending", OrdersController.pending);
+  app.get("/admin/orders/completed", OrdersController.completed);
 }
