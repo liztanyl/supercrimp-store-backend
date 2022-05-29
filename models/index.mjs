@@ -1,23 +1,23 @@
-import { Sequelize } from 'sequelize';
-import allConfig from '../config/config.js';
+import { Sequelize } from "sequelize";
+import allConfig from "../config/config.js";
 
-import initAdminUserModel from './adminUser.mjs';
-import initUserModel from './user.mjs';
-import initOrderModel from './order.mjs';
-import initProductModel from './product.mjs';
-import initColourModel from './colour.mjs';
-import initOrderProductModel from './orderProduct.mjs';
+import initAdminUserModel from "./adminUser.mjs";
+import initUserModel from "./user.mjs";
+import initOrderModel from "./order.mjs";
+import initProductModel from "./product.mjs";
+import initColourModel from "./colour.mjs";
+import initOrderProductModel from "./orderProduct.mjs";
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || "development";
 
 const config = allConfig[env];
 const db = {};
 
 const sequelize = new Sequelize(
-	config.database,
-	config.username,
-	config.password,
-	config
+  config.database,
+  config.username,
+  config.password,
+  config
 );
 
 db.sequelize = sequelize;
@@ -36,12 +36,20 @@ db.User.hasMany(db.Order);
 // uses order_product model for through table
 db.Order.belongsToMany(db.Product, { through: db.OrderProduct });
 db.Product.belongsToMany(db.Order, { through: db.OrderProduct });
+db.Order.belongsToMany(db.Colour, { through: db.OrderProduct });
+db.Colour.belongsToMany(db.Order, { through: db.OrderProduct });
+
+db.Order.hasMany(db.OrderProduct);
+db.OrderProduct.belongsTo(db.Order);
+
+db.Colour.hasMany(db.OrderProduct);
+db.OrderProduct.belongsTo(db.Colour);
+
+db.Product.hasMany(db.OrderProduct);
+db.OrderProduct.belongsTo(db.Product);
 
 // no product_colour model
-db.Product.belongsToMany(db.Colour, { through: 'products_colours' });
-db.Colour.belongsToMany(db.Product, { through: 'products_colours' });
-
-db.OrderProduct.belongsTo(db.Colour);
-db.Colour.hasMany(db.OrderProduct);
+db.Product.belongsToMany(db.Colour, { through: "products_colours" });
+db.Colour.belongsToMany(db.Product, { through: "products_colours" });
 
 export default db;
