@@ -62,4 +62,7 @@ export default function bindRoutes(app) {
   // RETRIEVE ALL ODRERS
   app.get("/admin/orders/completed", OrdersController.completed);
   app.get("/admin/orders/pending", OrdersController.pending);
+  app.get("/admin/order/:orderId", OrdersController.orderDetails);
+  app.post("/admin/order/completed", OrdersController.orderCompleted);
+  app.post("/admin/order/to_pending", OrdersController.toPending);
 }

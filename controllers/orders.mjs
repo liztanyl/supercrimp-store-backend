@@ -35,6 +35,57 @@ export default function initOrdersController(db) {
     }
   };
 
+  const orderDetails = async (request, response) => {
+    try {
+      const { orderId } = request.params;
+
+      const order = await db.Order.findOne({
+        where: { id: orderId },
+        include: [
+          { model: db.User },
+          { model: db.OrderProduct, include: [db.Product, db.Colour] },
+        ],
+      });
+
+      const dataToClient = formatOrder(order);
+      response.send(dataToClient);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const orderCompleted = async (request, response) => {
+    try {
+      const { id } = request.body;
+      const completedOrder = await db.Order.update(
+        { complete: true },
+        {
+          where: { id },
+        }
+      );
+
+      response.send(completedOrder);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const toPending = async (request, response) => {
+    try {
+      const { id } = request.body;
+      const completedOrder = await db.Order.update(
+        { complete: false },
+        {
+          where: { id },
+        }
+      );
+
+      response.send(completedOrder);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const checkout = async (request, response) => {
     try {
     } catch (error) {
@@ -45,6 +96,9 @@ export default function initOrdersController(db) {
   return {
     pending,
     completed,
+    orderDetails,
+    orderCompleted,
+    toPending,
     checkout,
   };
 }
