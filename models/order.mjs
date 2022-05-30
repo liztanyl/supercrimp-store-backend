@@ -1,6 +1,6 @@
 export default function initOrderModel(sequelize, DataTypes) {
 	return sequelize.define(
-		'order',
+		"order",
 		{
 			id: {
 				allowNull: false,
@@ -11,8 +11,8 @@ export default function initOrderModel(sequelize, DataTypes) {
 			userId: {
 				type: DataTypes.INTEGER,
 				references: {
-					model: 'users',
-					key: 'id',
+					model: "users",
+					key: "id",
 				},
 			},
 			deliveryFee: {
@@ -26,6 +26,10 @@ export default function initOrderModel(sequelize, DataTypes) {
 				allowNull: false,
 				type: DataTypes.BOOLEAN,
 			},
+			paid: {
+				allowNull: false,
+				type: DataTypes.BOOLEAN,
+			},
 			createdAt: {
 				allowNull: false,
 				type: DataTypes.DATE,
@@ -36,7 +40,7 @@ export default function initOrderModel(sequelize, DataTypes) {
 			},
 		},
 		{
-			tableName: 'orders',
+			tableName: "orders",
 			underscored: true,
 		}
 	);
