@@ -6,8 +6,6 @@ export default function initColoursController(db) {
 			const colours = await db.Colour.findAll();
 
 			const dataToClient = colours.map((colour) => formatColour(colour));
-
-			// console.log(dataToClient);
 			response.send(dataToClient);
 		} catch (error) {
 			console.log(error.message);
@@ -21,8 +19,6 @@ export default function initColoursController(db) {
 			});
 
 			const dataToClient = colours.map((colour) => formatColour(colour));
-
-			console.log(dataToClient);
 			response.send(dataToClient);
 		} catch (error) {
 			console.log(error.message);

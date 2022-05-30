@@ -1,6 +1,6 @@
 export default function initUserModel(sequelize, DataTypes) {
 	return sequelize.define(
-		'user',
+		"user",
 		{
 			id: {
 				allowNull: false,
@@ -22,9 +22,11 @@ export default function initUserModel(sequelize, DataTypes) {
 			addressLine1: {
 				allowNull: false,
 				type: DataTypes.STRING,
+				field: "address_line1",
 			},
 			addressLine2: {
 				type: DataTypes.STRING,
+				field: "address_line2",
 			},
 			postalCode: {
 				allowNull: false,
@@ -44,7 +46,7 @@ export default function initUserModel(sequelize, DataTypes) {
 			},
 		},
 		{
-			tableName: 'users',
+			tableName: "users",
 			underscored: true,
 		}
 	);
