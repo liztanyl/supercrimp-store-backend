@@ -34,7 +34,7 @@ export default function bindRoutes(app) {
 
 	// SUBMIT ORDER
 	app.post("/checkout", OrdersController.checkout);
-	app.post("/order/create", OrdersController.create);
+	app.post("/checkout/complete", OrdersController.completeCheckout);
 
 	///////////
 	/* ADMIN */
