@@ -18,12 +18,12 @@ export default function initAdminUsersController(db) {
         response.status(404).send("Error");
       } else {
         const id = adminUser.id;
-        const token = jwt.sign({ id }, JWT_SECRET_KEY);
+        const token = jwt.sign({ id, role: "admin" }, JWT_SECRET_KEY);
         response.cookie("token", token);
         response.send({ token: token });
       }
     } catch (error) {
-      console.log(error);
+      response.status(403).send("Wrong login details provided");
     }
   };
 
@@ -37,18 +37,17 @@ export default function initAdminUsersController(db) {
         request.path !== "/admin/logout"
       ) {
         console.log("checking auth!!");
-        const token = jwt.verify(request.cookies.token, JWT_SECRET_KEY);
 
-        const adminUser = await db.AdminUser.findOne({
-          where: { id: token.id },
-        });
+        const { role } = jwt.verify(request.cookies.token, JWT_SECRET_KEY);
 
-        adminUser ? next() : response.status(401).send("Invalid auth token");
-      } else {
-        next();
+        if (role !== "admin") {
+          throw "error";
+        }
       }
+      next();
     } catch (error) {
       console.log(error);
+      response.status(401).send("No Access");
     }
   };
 
