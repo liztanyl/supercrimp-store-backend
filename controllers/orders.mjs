@@ -102,7 +102,7 @@ export default function initOrdersController(db) {
 			const newUser = await db.User.create(userDetails, { returning: true });
 
 			const calculateTotal = (previous, current) =>
-				previous + current.quantity * current.subtotalCost;
+				previous + current.subtotalCost;
 			const totalCost = cart.reduce(calculateTotal, 0);
 
 			const newOrderDetails = {
