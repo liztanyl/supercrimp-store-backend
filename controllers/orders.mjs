@@ -1,4 +1,5 @@
 import { formatOrder } from "./helperFunctions.mjs";
+import generateHash from "../generateHash.mjs";
 
 import dotenv from "dotenv";
 import Stripe from "stripe";
@@ -11,7 +12,7 @@ export default function initOrdersController(db) {
 	const pending = async (request, response) => {
 		try {
 			const orders = await db.Order.findAll({
-				where: { complete: false },
+				where: { complete: false, paid: true },
 				include: [
 					{ model: db.User },
 					{ model: db.OrderProduct, include: [db.Product, db.Colour] },
@@ -28,7 +29,7 @@ export default function initOrdersController(db) {
 	const completed = async (request, response) => {
 		try {
 			const orders = await db.Order.findAll({
-				where: { complete: true },
+				where: { complete: true, paid: true },
 				include: [
 					{ model: db.User },
 					{ model: db.OrderProduct, include: [db.Product, db.Colour] },
@@ -80,14 +81,14 @@ export default function initOrdersController(db) {
 	const toPending = async (request, response) => {
 		try {
 			const { id } = request.body;
-			const completedOrder = await db.Order.update(
+			const pendingOrder = await db.Order.update(
 				{ complete: false },
 				{
 					where: { id },
 				}
 			);
 
-			response.send(completedOrder);
+			response.send(pendingOrder);
 		} catch (error) {
 			console.log(error);
 		}
@@ -95,7 +96,31 @@ export default function initOrdersController(db) {
 
 	const checkout = async (request, response) => {
 		try {
-			const { cart } = request.body;
+			const { cart, userDetails } = request.body;
+
+			delete userDetails.repeatPassword;
+			const newUser = await db.User.create(userDetails, { returning: true });
+
+			const calculateTotal = (previous, current) =>
+				previous + current.quantity * current.subtotalCost;
+			const totalCost = cart.reduce(calculateTotal, 0);
+
+			const newOrderDetails = {
+				userId: newUser.id,
+				deliveryFee: 0,
+				totalCost,
+				complete: false,
+				paid: false,
+			};
+
+			const newOrder = await db.Order.create(newOrderDetails, {
+				returning: true,
+			});
+
+			cart.forEach((item) => (item.orderId = newOrder.id));
+			await db.OrderProduct.bulkCreate(cart);
+
+			// Getting details to send to Stripe
 
 			const products = await db.Product.findAll({ where: { available: true } });
 			const colours = await db.Colour.findAll({ where: { available: true } });
@@ -121,10 +146,12 @@ export default function initOrdersController(db) {
 				payment_method_types: ["card"],
 				mode: "payment",
 				line_items: cart.map((item) => formatLineItems(item)),
-				success_url: `${FRONTEND_URL}/checkout-success`,
+				success_url: `${FRONTEND_URL}/order/${newOrder.id}`,
 				cancel_url: `${FRONTEND_URL}/checkout?error=payment`,
 			});
 
+			response.cookie(`orderId=${newOrder.id};`);
+			response.cookie(`orderSubmitted=${generateHash(newOrder.id)};`);
 			response.json({ url: session.url });
 		} catch (error) {
 			console.log(error.message);
@@ -132,32 +159,28 @@ export default function initOrdersController(db) {
 		}
 	};
 
-	const create = async (request, response) => {
+	const completeCheckout = async (request, response) => {
 		try {
-			const { cart, userDetails } = request.body;
+			const { orderSubmitted, orderId } = request.body;
 
-			const calculateTotal = (previous, current) =>
-				previous + current.quantity * current.subtotalCost;
-			const totalCost = cart.reduce(calculateTotal, 0);
+			// response.clearCookie("orderSubmitted");
+			// response.clearCookie("orderId");
 
-			const user = await db.User.create(userDetails, { returning: true });
-
-			const orderDetails = {
-				userId: user.id,
-				deliveryFee: 0,
-				totalCost,
-				complete: false,
-			};
-
-			const order = await db.Order.create(orderDetails, { returning: true });
-			cart.forEach((item) => (item.orderId = order.id));
-
-			const orderProducts = await db.OrderProduct.bulkCreate(cart);
-
-			response.send({ orderId: order.id, cart: orderProducts });
+			if (generateHash(orderId) === orderSubmitted) {
+				await db.Order.update({ paid: true }, { where: { id: orderId } });
+				const paidOrder = await db.Order.findByPk(orderId, {
+					include: [
+						{ model: db.User },
+						{ model: db.OrderProduct, include: [db.Product, db.Colour] },
+					],
+				});
+				response.send({ order: formatOrder(paidOrder) });
+			} else {
+				response.status(400);
+			}
 		} catch (error) {
 			console.log(error.message);
-			response.status(500).send(error.message);
+			response.status(500);
 		}
 	};
 
@@ -168,6 +191,6 @@ export default function initOrdersController(db) {
 		orderCompleted,
 		toPending,
 		checkout,
-		create,
+		completeCheckout,
 	};
 }
