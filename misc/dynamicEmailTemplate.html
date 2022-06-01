@@ -1,0 +1,133 @@
+<div style="font-family: inherit; text-align: inherit">
+  <span
+    style="
+      font-size: 16px;
+      font-family: 'trebuchet ms', helvetica, sans-serif;
+      color: #656565;
+    "
+    >Hi {{user.name}},</span
+  >
+</div>
+
+<div style="font-family: inherit; text-align: inherit"><br /><br /></div>
+<div style="font-family: inherit; text-align: inherit">
+  <span
+    style="
+      font-size: 16px;
+      font-family: 'trebuchet ms', helvetica, sans-serif;
+      color: #656565;
+    "
+    >This is a confirmation of your order of the following:&nbsp;</span
+  >
+</div>
+<div style="font-family: inherit; text-align: inherit"><br /></div>
+<div style="font-family: inherit; text-align: inherit">
+  <span
+    style="
+      font-size: 16px;
+      font-family: 'trebuchet ms', helvetica, sans-serif;
+      color: #656565;
+    "
+  >
+    <div style="font-family: inherit; text-align: inherit"><br /></div>
+
+    <div style="font-family: inherit; text-align: inherit">
+      <ul>
+        {{#each products}}
+        <li>
+          <div>
+            <span
+              style="
+                font-size: 16px;
+                font-family: 'trebuchet ms', helvetica, sans-serif;
+                color: #656565;
+              "
+              >{{this.product.name}} ({{this.colour.name}}), quantity:
+              {{this.quantity}}</span
+            >
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div style="font-family: inherit; text-align: inherit">
+      <span
+        style="
+          font-size: 16px;
+          font-family: 'trebuchet ms', helvetica, sans-serif;
+          color: #656565;
+        "
+        >Amount Paid: {{totalCost}}SGD</span
+      >
+    </div>
+    <div style="font-family: inherit; text-align: inherit">
+      <span
+        style="
+          font-size: 16px;
+          font-family: 'trebuchet ms', helvetica, sans-serif;
+          color: #656565;
+        "
+        >Delivery Fee: {{deliveryFee}}SGD</span
+      >
+    </div>
+  </span>
+</div>
+<div style="font-family: inherit; text-align: inherit"><br /></div>
+<div style="font-family: inherit; text-align: inherit">
+  <span
+    style="
+      font-size: 16px;
+      font-family: 'trebuchet ms', helvetica, sans-serif;
+      color: #656565;
+    "
+    >Your package will ship to the following address:
+  </span>
+</div>
+<div style="font-family: inherit; text-align: inherit"><br /></div>
+<div style="font-family: inherit; text-align: inherit">
+  <span
+    style="
+      font-size: 16px;
+      font-family: 'trebuchet ms', helvetica, sans-serif;
+      color: #656565;
+    "
+    >{{user.addressLine1}}
+  </span>
+</div>
+<div style="font-family: inherit; text-align: inherit">
+  <span
+    style="
+      font-size: 16px;
+      font-family: 'trebuchet ms', helvetica, sans-serif;
+      color: #656565;
+    "
+    >{{user.addressLine2}}
+  </span>
+</div>
+<div style="font-family: inherit; text-align: inherit">
+  <span
+    style="
+      font-size: 16px;
+      font-family: 'trebuchet ms', helvetica, sans-serif;
+      color: #656565;
+    "
+    >Singapore {{user.postalCode}}
+  </span>
+</div>
+
+<div style="font-family: inherit; text-align: inherit"><br /></div>
+
+<div style="font-family: inherit; text-align: inherit">
+  <span
+    style="
+      font-size: 16px;
+      font-family: 'trebuchet ms', helvetica, sans-serif;
+      color: #656565;
+    "
+    >You should receive your package within 2-5 working days, depending on our
+    logistics provider. :) &nbsp;</span
+  >
+</div>
+
+<div style="font-family: inherit; text-align: inherit"><br /></div>
