@@ -185,6 +185,7 @@ export default function initOrdersController(db) {
         if (!prevPaidOrder.paid) {
           // Sends email only once
           sendEmailToCustomer(formatOrder(paidOrder));
+          sendEmailToCustomer(formatOrder(paidOrder), true);
           console.log("EMAIL IS BEING SENT FOR THE FIRST TIME");
         }
       } else {

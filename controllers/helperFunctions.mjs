@@ -3,9 +3,13 @@ import sgMail from "@sendgrid/mail";
 import jsSHA from "jssha";
 
 dotenv.config();
-
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 const SALT = process.env.SALT;
+const SUPERCRIMP_EMAIL_ADDRESS = "supersupersupercrimp@gmail.com";
+const SUPERCRIMP = "Supercrimp";
+const TO_CUSTOMER_EMAIL_TEMPLATE_ID = "d-ab89c6a5703248d59760e71a1f5bf3d0";
+const TO_ADMIN_EMAIL_TEMPLATE_ID = "d-3fdaefaa84f641a7a956220885c2aa7d";
 
 export function generateHash(password) {
   const shaObj = new jsSHA("SHA-512", "TEXT", { encoding: "UTF8" });
@@ -14,7 +18,7 @@ export function generateHash(password) {
   return hash;
 }
 
-export function sendEmailToCustomer(paidOrder) {
+export function sendEmailToCustomer(paidOrder, toAdmin) {
   const { user } = paidOrder;
 
   const emailContent = {
@@ -23,12 +27,20 @@ export function sendEmailToCustomer(paidOrder) {
       name: user.name,
     },
     from: {
-      email: "supersupersupercrimp@gmail.com",
-      name: "Supercrimp",
+      email: SUPERCRIMP_EMAIL_ADDRESS,
+      name: SUPERCRIMP,
     },
-    templateId: "d-ab89c6a5703248d59760e71a1f5bf3d0",
+    templateId: TO_CUSTOMER_EMAIL_TEMPLATE_ID,
     dynamicTemplateData: paidOrder,
   };
+
+  if (toAdmin) {
+    emailContent.to.email = SUPERCRIMP_EMAIL_ADDRESS;
+    emailContent.to.name = SUPERCRIMP;
+    emailContent.templateId = TO_ADMIN_EMAIL_TEMPLATE_ID;
+  }
+
+  console.log(emailContent);
 
   sgMail
     .send(emailContent)
