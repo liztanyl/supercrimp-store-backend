@@ -3,8 +3,6 @@ import {
   generateHash,
   sendEmailToCustomer,
 } from "./helperFunctions.mjs";
-// import generateHash from "../generateHash.mjs";
-// import sendEmailToCustomer from "../sendgridQuery.mjs";
 
 import dotenv from "dotenv";
 import Stripe from "stripe";
