@@ -28,13 +28,11 @@ export default function initAdminUsersController(db) {
 	};
 
 	const logout = async (request, response) => {
-		console.log("\x1b[36m%s\x1b[0m", "logout start");
 		try {
 			response.clearCookie("token");
-			response.status(200);
-			console.log("\x1b[36m%s\x1b[0m", "logout end");
+			response.send("Logout success");
 		} catch (err) {
-			console.log("\x1b[36m%s\x1b[0m", "logout error");
+			response.status(500).send("Something went wrong :(");
 			console.log(err);
 		}
 	};
