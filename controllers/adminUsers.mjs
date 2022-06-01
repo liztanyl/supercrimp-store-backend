@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import generateHash from "../generateHash.mjs";
+import { generateHash } from "./helperFunctions.mjs";
 
 dotenv.config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -29,8 +29,6 @@ export default function initAdminUsersController(db) {
 
   const checkAuthAdmin = async (request, response, next) => {
     try {
-      console.log(request.path);
-
       if (
         request.path.includes("/admin") &&
         request.path !== "/admin/login" &&

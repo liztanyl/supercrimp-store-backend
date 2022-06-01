@@ -1,3 +1,45 @@
+import dotenv from "dotenv";
+import sgMail from "@sendgrid/mail";
+import jsSHA from "jssha";
+
+dotenv.config();
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const SALT = process.env.SALT;
+
+export function generateHash(password) {
+  const shaObj = new jsSHA("SHA-512", "TEXT", { encoding: "UTF8" });
+  shaObj.update(SALT + password);
+  const hash = shaObj.getHash("HEX");
+  return hash;
+}
+
+export function sendEmailToCustomer(paidOrder) {
+  const { user } = paidOrder;
+
+  const emailContent = {
+    to: {
+      email: user.email,
+      name: user.name,
+    },
+    from: {
+      email: "supersupersupercrimp@gmail.com",
+      name: "Supercrimp",
+    },
+    templateId: "d-ab89c6a5703248d59760e71a1f5bf3d0",
+    dynamicTemplateData: paidOrder,
+  };
+
+  sgMail
+    .send(emailContent)
+    .then((response) => {
+      console.log("Email sent");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
 export function formatColour(colour) {
   return {
     id: colour.id,
