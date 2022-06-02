@@ -6,7 +6,7 @@ dotenv.config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 export default function initAdminUsersController(db) {
-	const index = async (request, response) => {
+	const login = async (request, response) => {
 		try {
 			const { email, password } = request.body;
 
@@ -60,7 +60,7 @@ export default function initAdminUsersController(db) {
 	};
 
 	return {
-		index,
+		login,
 		logout,
 		checkAuthAdmin,
 	};
