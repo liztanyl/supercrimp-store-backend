@@ -39,10 +39,9 @@ export default function bindRoutes(app) {
 	///////////
 	/* ADMIN */
 	///////////
-	app.get("/admin/", AdminUsersController.index); // not entirely sure how this works atm, seems like we might not need this?
 
 	// LOGIN
-	app.post("/admin/login", AdminUsersController.index);
+	app.post("/admin/login", AdminUsersController.login);
 	app.post("/admin/logout", AdminUsersController.logout);
 
 	// RETRIEVE PRODUCTS

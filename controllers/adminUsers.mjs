@@ -6,7 +6,7 @@ dotenv.config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 export default function initAdminUsersController(db) {
-	const index = async (request, response) => {
+	const login = async (request, response) => {
 		try {
 			const { email, password } = request.body;
 
@@ -28,13 +28,11 @@ export default function initAdminUsersController(db) {
 	};
 
 	const logout = async (request, response) => {
-		console.log("\x1b[36m%s\x1b[0m", "logout start");
 		try {
 			response.clearCookie("token");
-			response.status(200);
-			console.log("\x1b[36m%s\x1b[0m", "logout end");
+			response.send("Logout success");
 		} catch (err) {
-			console.log("\x1b[36m%s\x1b[0m", "logout error");
+			response.status(500).send("Something went wrong :(");
 			console.log(err);
 		}
 	};
@@ -62,7 +60,7 @@ export default function initAdminUsersController(db) {
 	};
 
 	return {
-		index,
+		login,
 		logout,
 		checkAuthAdmin,
 	};
