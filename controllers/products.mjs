@@ -31,6 +31,7 @@ export default function initProductsController(db) {
 			response.send(dataToClient);
 		} catch (error) {
 			console.log(error.message);
+			response.status(404).send("Something went wrong");
 		}
 	};
 
@@ -46,6 +47,7 @@ export default function initProductsController(db) {
 			response.send(dataToClient);
 		} catch (error) {
 			console.log(error.message);
+			response.status(404).send("Something went wrong");
 		}
 	};
 
@@ -80,6 +82,7 @@ export default function initProductsController(db) {
 			newProduct.addColours(productColours);
 		} catch (error) {
 			console.log(error);
+			response.status(400).send("Something went wrong");
 		}
 	};
 
@@ -142,6 +145,7 @@ export default function initProductsController(db) {
 			await Promise.all(updateQueries);
 		} catch (error) {
 			console.log(error);
+			response.status(400).send("Something went wrong");
 		}
 	};
 
@@ -159,6 +163,7 @@ export default function initProductsController(db) {
 			response.send({});
 		} catch (error) {
 			console.log(error);
+			response.status(400).send("Something went wrong");
 		}
 	};
 

@@ -8,7 +8,8 @@ export default function initColoursController(db) {
 			const dataToClient = colours.map((colour) => formatColour(colour));
 			response.send(dataToClient);
 		} catch (error) {
-			console.log(error.message);
+			console.log(error);
+			response.status(404).send("Something went wrong");
 		}
 	};
 
@@ -21,7 +22,8 @@ export default function initColoursController(db) {
 			const dataToClient = colours.map((colour) => formatColour(colour));
 			response.send(dataToClient);
 		} catch (error) {
-			console.log(error.message);
+			console.log(error);
+			response.status(404).send("Something went wrong");
 		}
 	};
 
@@ -38,6 +40,7 @@ export default function initColoursController(db) {
 			response.send(formatColour(newColour));
 		} catch (error) {
 			console.log(error);
+			response.status(400).send("Something went wrong");
 		}
 	};
 
@@ -57,6 +60,7 @@ export default function initColoursController(db) {
 			response.send(formatColour(updatedColour));
 		} catch (error) {
 			console.log(error);
+			response.status(400).send("Something went wrong");
 		}
 	};
 
@@ -74,6 +78,7 @@ export default function initColoursController(db) {
 			response.send(formatColour(colourToDelete));
 		} catch (error) {
 			console.log(error);
+			response.status(400).send("Something went wrong");
 		}
 	};
 
