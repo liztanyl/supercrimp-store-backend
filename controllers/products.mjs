@@ -27,8 +27,12 @@ export default function initProductsController(db) {
 				include: db.Colour,
 			});
 
-			const dataToClient = products.map((product) => formatProduct(product));
-			response.send(dataToClient);
+			if (products.length) {
+				const dataToClient = products.map((product) => formatProduct(product));
+				response.send(dataToClient);
+			} else {
+				response.status(404).send("Something went wrong");
+			}
 		} catch (error) {
 			console.log(error.message);
 			response.status(404).send("Something went wrong");
@@ -80,6 +84,8 @@ export default function initProductsController(db) {
 
 			const productColours = await getColourQueries(db, colours);
 			newProduct.addColours(productColours);
+
+			response.send("Added product");
 		} catch (error) {
 			console.log(error);
 			response.status(400).send("Something went wrong");
@@ -143,6 +149,7 @@ export default function initProductsController(db) {
 			});
 
 			await Promise.all(updateQueries);
+			response.send("Item updated");
 		} catch (error) {
 			console.log(error);
 			response.status(400).send("Something went wrong");
