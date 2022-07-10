@@ -3,14 +3,14 @@ dotenv.config();
 
 module.exports = {
   development: {
-    username: 'gcskhor',
+    username: '<YOUR_USERNAME>',
     password: null,
     database: 'supercrimp_store',
     host: '127.0.0.1',
     dialect: 'postgres',
   },
   production: {
-    username: 'gcskhor',
+    username: '<YOUR_USERNAME>',
     password: process.env.POSTGRES_PW,
     database: 'supercrimp_store',
     host: '127.0.0.1',
