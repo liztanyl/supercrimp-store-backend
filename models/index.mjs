@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
-import allConfig from '../config/config.js';
+import url from 'url';
 
+import allConfig from '../config/config.js';
 import initAdminUserModel from './adminUser.mjs';
 import initUserModel from './user.mjs';
 import initOrderModel from './order.mjs';
