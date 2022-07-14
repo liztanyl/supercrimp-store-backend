@@ -1,24 +1,43 @@
-import { Sequelize } from "sequelize";
-import allConfig from "../config/config.js";
+import { Sequelize } from 'sequelize';
+import allConfig from '../config/config.js';
 
-import initAdminUserModel from "./adminUser.mjs";
-import initUserModel from "./user.mjs";
-import initOrderModel from "./order.mjs";
-import initProductModel from "./product.mjs";
-import initColourModel from "./colour.mjs";
-import initOrderProductModel from "./orderProduct.mjs";
+import initAdminUserModel from './adminUser.mjs';
+import initUserModel from './user.mjs';
+import initOrderModel from './order.mjs';
+import initProductModel from './product.mjs';
+import initColourModel from './colour.mjs';
+import initOrderProductModel from './orderProduct.mjs';
 
-const env = process.env.NODE_ENV || "development";
+const env = process.env.NODE_ENV || 'development';
 
 const config = allConfig[env];
 const db = {};
 
-const sequelize = new Sequelize(
-  config.database,
-  config.username,
-  config.password,
-  config
-);
+let sequelize;
+
+if (env === 'production') {
+  // Break apart the Heroku database url and rebuild the configs we need
+  const { DATABASE_URL } = process.env;
+  const dbUrl = url.parse(DATABASE_URL);
+  const username = dbUrl.auth.substr(0, dbUrl.auth.indexOf(':'));
+  const password = dbUrl.auth.substr(
+    dbUrl.auth.indexOf(':') + 1,
+    dbUrl.auth.length
+  );
+  const dbName = dbUrl.path.slice(1);
+  const host = dbUrl.hostname;
+  const { port } = dbUrl;
+  config.host = host;
+  config.port = port;
+  sequelize = new Sequelize(dbName, username, password, config);
+} else {
+  sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+  );
+}
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
@@ -49,7 +68,7 @@ db.Order.hasMany(db.OrderProduct);
 db.OrderProduct.belongsTo(db.Order);
 
 // no product_colour model
-db.Product.belongsToMany(db.Colour, { through: "products_colours" });
-db.Colour.belongsToMany(db.Product, { through: "products_colours" });
+db.Product.belongsToMany(db.Colour, { through: 'products_colours' });
+db.Colour.belongsToMany(db.Product, { through: 'products_colours' });
 
 export default db;
