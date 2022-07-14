@@ -10,11 +10,16 @@ module.exports = {
     dialect: 'postgres',
   },
   production: {
-    username: 'postgres',
-    password: process.env.POSTGRES_PW,
-    database: 'supercrimp_store',
-    host: '127.0.0.1',
+    use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
+    protocol: 'postgres',
+    dialectOptions: {
+      ssl: {
+        // https://github.com/sequelize/sequelize/issues/12083
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   },
 };
 //
