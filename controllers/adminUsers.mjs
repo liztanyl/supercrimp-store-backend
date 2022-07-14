@@ -19,12 +19,12 @@ export default function initAdminUsersController(db) {
       } else {
         const id = adminUser.id;
         const token = jwt.sign({ id, role: 'admin' }, JWT_SECRET_KEY);
-        // response.header('Access-Control-Allow-Credentials', true);
-        // response.header('Access-Control-Allow-Credentials', true);
-        // response.header(
-        //   'Access-Control-Allow-Headers',
-        //   'Origin, X-Requested-With, Content-Type, Accept'
-        // );
+        response.header('Access-Control-Allow-Origin', '*');
+        response.header('Access-Control-Allow-Credentials', true);
+        response.header(
+          'Access-Control-Allow-Headers',
+          'Origin, X-Requested-With, Content-Type, Accept'
+        );
         response.cookie('token', token, { sameSite: 'none', secure: true });
         response.send({ token: token });
       }
