@@ -25,7 +25,7 @@ export default function initAdminUsersController(db) {
         //   'Access-Control-Allow-Headers',
         //   'Origin, X-Requested-With, Content-Type, Accept'
         // );
-        response.cookie('token', token);
+        response.cookie('token', token, { sameSite: 'none', secure: true });
         response.send({ token: token });
       }
     } catch (error) {
