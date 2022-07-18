@@ -28,10 +28,10 @@ export default function initAdminUsersController(db) {
         response.cookie('token', token, {
           sameSite: 'none',
           secure: true,
-          domain:
-            process.env.NODE_ENV === 'production'
-              ? 'https://supercrimp.co'
-              : '',
+          // domain:
+          //   process.env.NODE_ENV === 'production'
+          //     ? 'https://supercrimp.co'
+          //     : '',
         });
         response.send({ token: token });
       }
