@@ -17,7 +17,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: FRONTEND_URL,
+    origin: [FRONTEND_URL, process.env.SECONDARY_FRONTEND_URL],
   })
 );
 app.set('trust proxy', 1);
