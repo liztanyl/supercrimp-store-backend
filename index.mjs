@@ -20,7 +20,7 @@ app.use(
     origin: FRONTEND_URL,
   })
 );
-// app.set("trust proxy", 1)
+// app.set('trust proxy', 1);
 app.set('view engine', 'ejs');
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
