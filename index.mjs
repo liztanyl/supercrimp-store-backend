@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import methodOverride from 'method-override';
 import dotenv from 'dotenv';
 import bindRoutes from './routes.mjs';
@@ -25,6 +26,21 @@ app.use(
   })
 );
 app.set('trust proxy', 1);
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    cookie: {
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      maxAge: 60000000,
+      secure: process.env.NODE_ENV === 'production',
+    },
+    resave: true,
+    saveUninitialized: false,
+    ttl: 60 * 60 * 24 * 30,
+  })
+);
+
 app.set('view engine', 'ejs');
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
