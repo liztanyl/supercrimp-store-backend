@@ -1,6 +1,6 @@
 # Supercrimp E-Commerce Platform
 
-> **Note: This is the backend repo. The frontend repo, along with features and previews of the site, can be viewed [here](https://github.com/gcskhor/supercrimp-store-frontend).**
+> **Note: This is the backend repo. The frontend repo, along with features and previews of the site, can be viewed [here](https://github.com/liztanyl/supercrimp-store-frontend).**
 
 SUPERCRIMP is an existing, small, local business that sells 3D-printed crimp holds for rock-climbing enthusiasts.
 
